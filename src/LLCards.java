@@ -15,7 +15,7 @@ public class LLCards {
             return;
         } else {
             LLNode cursor = head;
-            if (cursor.isSmallerValue(newCard)) {
+            if (cursor.isSmallerValue(newCard)==false) {
                 newCardNode.setLink(cursor);
                 head = newCardNode;
                 numOfCards++;
@@ -27,15 +27,24 @@ public class LLCards {
                     cursor.setLink(newCardNode);
                     numOfCards++;
                     return;
-                } else if (next.isSmallerValue(newCard)) {
-                    LLNode tempNext = next;
+                } else if (next.isSmallerValue(newCard)==false) {
                     cursor.setLink(newCardNode);
-                    newCardNode.setLink(tempNext);
+                    newCardNode.setLink(next);
+                    return;
                 }
                 cursor = cursor.getLink();
             }
         }
 
+    }
+
+    public void addEnd(Cardd newCard){
+        LLNode newCardNode=new LLNode(newCard,null);
+        LLNode cursor=head;
+        while (cursor.getLink()!=null){
+            cursor=cursor.getLink();
+        }
+        cursor.setLink(newCardNode);
     }
 
     public Cardd removeAtIndex(int index) {
@@ -46,9 +55,10 @@ public class LLCards {
             return null;
         }
         if (index == 0) {
+            LLNode tempHead=head;
             head = head.getLink();
             numOfCards--;
-            return head.getData();
+            return tempHead.getData();
         } else {
             LLNode cursor = null;
             LLNode next = head;
@@ -65,15 +75,15 @@ public class LLCards {
 
     }
 
-    /*public void shuffle() { //ASSUMPTION: Each shuffle includes 4 times(the most)
-
-        int rand = (int) (Math.random() * 100) % numOfCards;
-        System.out.println(rand);
-        Cardd deletedCard = removeAtIndex(rand);
-        System.out.println(deletedCard.getValue().toString());
-
-
-    }*/
+    public void shuffle() { //ASSUMPTION: Each shuffle includes 4 times(the most)
+        for(int i=0;i<3;i++) {
+            int rand = (int) (Math.random() * 100) % numOfCards;
+            System.out.println(rand);
+            Cardd deletedCard = removeAtIndex(rand);
+            System.out.println(deletedCard.toString());
+            addEnd(deletedCard);
+        }
+    }
 
     public int size() {
         return numOfCards;

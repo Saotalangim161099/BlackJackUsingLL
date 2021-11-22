@@ -30,6 +30,10 @@ public class Deck {
         this.deck = deck;
     }
 
+    public void shuffleDeck(){
+        deck.shuffle();
+    }
+
     public void printDeck() {
         deck.printCards();
     }

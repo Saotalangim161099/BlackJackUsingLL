@@ -23,7 +23,7 @@ public class LLNode {
         this.link = link;
     }
 
-    public boolean isSmallerValue(Cardd card){
-        return Integer.parseInt(card.getValue())<Integer.parseInt(this.getData().getValue());
+    public boolean isSmallerValue(Cardd card){ //Node value<card value
+        return Integer.parseInt(this.getData().getValue())<Integer.parseInt(card.getValue());
     }
 }
