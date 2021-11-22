@@ -2,7 +2,7 @@ public class LLNode {
     Cardd data;
     LLNode link;
 
-    public LLNode(Cardd data, LLNode link) {
+    public LLNode(Cardd data,LLNode link) {
         this.data = data;
         this.link = link;
     }
@@ -11,8 +11,8 @@ public class LLNode {
         return data;
     }
 
-    public void setData(Cardd value) {
-        this.data = value;
+    public void setData(Cardd data) {
+        this.data = data;
     }
 
     public LLNode getLink() {
@@ -23,7 +23,7 @@ public class LLNode {
         this.link = link;
     }
 
-    public boolean isSmallerValue(Cardd newCard){
-        return Integer.parseInt(newCard.getValue())<(Integer.parseInt(this.getData().getValue()));
+    public boolean isSmallerValue(Cardd card){
+        return Integer.parseInt(card.getValue())<Integer.parseInt(this.getData().getValue());
     }
 }

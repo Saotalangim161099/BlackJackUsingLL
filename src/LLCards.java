@@ -1,8 +1,10 @@
-public class LLCards {
+public class LLCards{
     LLNode head;
+    int numOfCards;
 
     public LLCards() {
         this.head = null;
+        numOfCards = 0;
     }
 
     public void addCardNode(Cardd newCard) {
@@ -15,7 +17,6 @@ public class LLCards {
             if (cursor.isSmallerValue(newCard)) {
                 newCardNode.setLink(cursor);
                 head = newCardNode;
-                System.out.println("Check!!!!");
                 return;
             }
             while (cursor != null) {
@@ -25,16 +26,16 @@ public class LLCards {
                     return;
                 } else if (next.isSmallerValue(newCard)) {
                     LLNode tempNext = next;
-                    newCardNode.setLink(tempNext);
                     cursor.setLink(newCardNode);
-                    return;
+                    newCardNode.setLink(tempNext);
                 }
                 cursor = cursor.getLink();
             }
         }
+        numOfCards++;
     }
-            //LLNode nextHead = head.getLink();
-            //LLNode next = head.getLink();
+    //LLNode nextHead = head.getLink();
+    //LLNode next = head.getLink();
             /*if (nextHead == null) {
                 if (cursor.isSmallerValue(newCard)) {
                     newCardNode.setLink(cursor);
@@ -63,8 +64,9 @@ public class LLCards {
             }*/
 
 
-
-
+    public int size() {
+        return numOfCards;
+    }
 
 
     public void printCards() {
@@ -78,12 +80,6 @@ public class LLCards {
         }
     }
 
-    Cardd card1 = new Cardd("11", "D");
-    LLNode node = new LLNode(card1, null);
-    Cardd card2 = new Cardd("9", "D");
 
-    public void smaller() {  //card < node value
-        System.out.println(node.isSmallerValue(card2));
-    }
 }
 
