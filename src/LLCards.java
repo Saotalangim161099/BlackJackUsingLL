@@ -65,7 +65,7 @@ public class LLCards {
 
     }
 
-    public void shuffle() { //ASSUMPTION: Each shuffle includes 4 times(the most)
+    /*public void shuffle() { //ASSUMPTION: Each shuffle includes 4 times(the most)
 
         int rand = (int) (Math.random() * 100) % numOfCards;
         System.out.println(rand);
@@ -73,7 +73,7 @@ public class LLCards {
         System.out.println(deletedCard.getValue().toString());
 
 
-    }
+    }*/
 
     public int size() {
         return numOfCards;
