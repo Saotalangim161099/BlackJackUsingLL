@@ -30,9 +30,6 @@ public class CardsDriver {
         //Deck newDeck=new Deck();
         //newDeck.printDeck();*/
 
-        System.out.println("The crazy: ");
-        int rand = (int) (Math.random() * 100) % 6;
-        System.out.println(rand);
 
 
     }}
