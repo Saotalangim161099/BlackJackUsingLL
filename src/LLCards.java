@@ -78,9 +78,7 @@ public class LLCards {
     public void shuffle() { //ASSUMPTION: Each shuffle includes 4 times(the most)
         for(int i=0;i<3;i++) {
             int rand = (int) (Math.random() * 100) % numOfCards;
-            System.out.println(rand);
             Cardd deletedCard = removeAtIndex(rand);
-            System.out.println(deletedCard.toString());
             addEnd(deletedCard);
         }
     }

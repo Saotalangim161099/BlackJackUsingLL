@@ -13,7 +13,6 @@ public class Deck {
             for (int j = 0; j < CARD_SUITS.length; j++) {
                 Cardd card = new Cardd(CARD_VALUES[i], CARD_SUITS[j]);
                 deck.addCardNode(card);
-
             }
         }
     }
