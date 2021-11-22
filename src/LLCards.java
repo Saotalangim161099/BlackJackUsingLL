@@ -1,4 +1,4 @@
-public class LLCards{
+public class LLCards {
     LLNode head;
     int numOfCards;
 
@@ -11,18 +11,21 @@ public class LLCards{
         LLNode newCardNode = new LLNode(newCard, null);
         if (head == null) {
             head = newCardNode;
+            numOfCards++;
             return;
         } else {
             LLNode cursor = head;
             if (cursor.isSmallerValue(newCard)) {
                 newCardNode.setLink(cursor);
                 head = newCardNode;
+                numOfCards++;
                 return;
             }
             while (cursor != null) {
                 LLNode next = cursor.getLink();
                 if (next == null) {
                     cursor.setLink(newCardNode);
+                    numOfCards++;
                     return;
                 } else if (next.isSmallerValue(newCard)) {
                     LLNode tempNext = next;
@@ -32,37 +35,45 @@ public class LLCards{
                 cursor = cursor.getLink();
             }
         }
-        numOfCards++;
+
     }
-    //LLNode nextHead = head.getLink();
-    //LLNode next = head.getLink();
-            /*if (nextHead == null) {
-                if (cursor.isSmallerValue(newCard)) {
-                    newCardNode.setLink(cursor);
-                    head = newCardNode;
-                    System.out.println("Check!!!!");
-                    return;
-                } else {
-                    head.setLink(newCardNode);
-                    System.out.println("Check!!!!");
-                }
-                System.out.println("Check!!!!");
+
+    public Cardd removeAtIndex(int index) {
+        if (index > numOfCards) {
+            return null;
+        }
+        if (head == null) {
+            return null;
+        }
+        if (index == 0) {
+            head = head.getLink();
+            numOfCards--;
+            return head.getData();
+        } else {
+            LLNode cursor = null;
+            LLNode next = head;
+            for (int i = 0; i < index; i++) {
+                cursor = next;
+                next = next.getLink();
             }
-            else if (next)
-            while (cursor != null) {
-                LLNode next = cursor.getLink();
-                if (next.isSmallerValue(newCard)) {
-                    LLNode tempNext = next;
-                    newCardNode.setLink(tempNext);
-                    cursor.setLink(newCardNode);
-                    break;
-                } else {
-                    next.setLink(newCardNode);
+            LLNode nextOfNext = next.getLink();
+            LLNode removedNode = next;
+            cursor.setLink(nextOfNext);
+            numOfCards--;
+            return removedNode.getData();
+        }
 
-                }
-                cursor = cursor.getLink();
-            }*/
+    }
 
+    public void shuffle() { //ASSUMPTION: Each shuffle includes 4 times(the most)
+
+        int rand = (int) (Math.random() * 100) % numOfCards;
+        System.out.println(rand);
+        Cardd deletedCard = removeAtIndex(rand);
+        System.out.println(deletedCard.getValue().toString());
+
+
+    }
 
     public int size() {
         return numOfCards;
