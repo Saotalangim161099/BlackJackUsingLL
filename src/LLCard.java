@@ -1,29 +1,16 @@
-public class Cardd {
+public class LLCard {
     String value;
     String suit;
+    int numOfCards;
+    LLCard link;
 
-    public Cardd(String value, String suit) {
+    public LLCard(String value, String suit, LLCard link) {
         this.value = value;
         this.suit = suit;
+        this.link = link;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getSuit() {
-        return suit;
-    }
-
-    public void setSuit(String suit) {
-        this.suit = suit;
-    }
-
-    public String toString() {
+    public String getCard(){
         switch (suit) {
             case "H":
                 switch (value) {
@@ -79,6 +66,22 @@ public class Cardd {
                 }
         }
         return null;
+    }
 
+    public void setCard(String value, String suit){
+        this.value=value;
+        this.suit=suit;
+    }
+
+    public LLCard getLink() {
+        return link;
+    }
+
+    public void setLink(LLCard link) {
+        this.link = link;
+    }
+
+    public boolean isSmallerValue(LLCard card) { //Node value<card value
+        return Integer.parseInt(this.value) < Integer.parseInt(card.value);
     }
 }
