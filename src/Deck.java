@@ -9,10 +9,16 @@ public class Deck {
 
     /**
      * if empty is true, generate a deck with no card, otherwise, generate a full standard deck
+     *
      * @param empty
      */
     public Deck(boolean empty) {
         //original deck has no card
+        if (empty == true) {
+            return;
+        } else {
+            generateStandardDeck();
+        }
     }
 
 
@@ -20,14 +26,26 @@ public class Deck {
         for (int i = 0; i < CARD_VALUES.length; i++) {
             for (int j = 0; j < CARD_SUITS.length; j++) {
                 LLCard card = new LLCard(CARD_VALUES[i], CARD_SUITS[j], null);
-                addCardNode(card);
+                addFront(card);
             }
         }
     }
 
+    public void addFront(LLCard newCard) {
+        if (head == null) {
+            head = newCard;
+            numOfCards++;
+            return;
+        } else {
+            newCard.setLink(head);
+            head = newCard;
+            numOfCards++;
+            return;
+        }
+    }
 
     //change name & simplify
-    public void addCardNode(LLCard newCardNode) {
+    public void addCardInOrder(LLCard newCardNode) {
         if (head == null) {
             head = newCardNode;
             numOfCards++;
@@ -57,43 +75,61 @@ public class Deck {
 
     }
 
-    //Fix, add both addEnd and addFront method
-    public void addEnd(LLCard newCardNode) {
-        System.out.println(("Add edd"));
-        LLCard cursor = head;
-        while (cursor.getLink() != null) {
-            cursor = cursor.getLink();
-            System.out.println("Here");
-        }
-        cursor.setLink(newCardNode);
-    }
 
     public LLCard removeAtIndex(int index) {
-        System.out.println("Removing cardd at " + index);
-        if (index > numOfCards) {
-            return null;
-        }
+        System.out.println("Removing card at " + index);
         if (head == null) {
             return null;
         }
+        LLCard cursor = head;
         if (index == 0) {
             LLCard tempHead = head;
             head = head.getLink();
             numOfCards--;
             return tempHead;
-        } else {
-            LLCard cursor = null;
-            LLCard next = head;
-            for (int i = 0; i < index; i++) {
-                cursor = next;
-                next = next.getLink();
-            }
-            LLCard nextOfNext = next.getLink();
-            LLCard removedNode = next;
-            cursor.setLink(nextOfNext);
-            numOfCards--;
-            return removedNode;
+
         }
+
+        for (int i = 0; cursor != null && i < index - 1; i++) {
+            cursor = cursor.getLink();
+        }
+        if (cursor==null||cursor.getLink()==null) {
+            return null;
+        }
+        LLCard nextOfNext = cursor.getLink().getLink();
+        LLCard removedNode = cursor.getLink();
+        cursor.setLink(nextOfNext);
+        numOfCards--;
+        return removedNode;
+
+
+    }
+
+    //Fix, add both addEnd and addFront method
+    public void addLast(LLCard newCardNode) {
+        if (head == null) {
+            head = newCardNode;
+            numOfCards++;
+            return;
+        }
+        else if  (head.getLink()==null){
+            head.setLink(newCardNode);
+            numOfCards++;
+            return;
+        }
+        else{
+            LLCard cursor = head;
+
+            while (cursor.getLink() != null) {
+                cursor = cursor.getLink();
+                System.out.println(cursor.getCard());
+                System.out.println("*******");
+                numOfCards++;
+
+            }
+            cursor.setLink(newCardNode);
+        }
+
 
     }
 
@@ -106,7 +142,9 @@ public class Deck {
             SecureRandom random = new SecureRandom();
             int rand = Math.abs(random.nextInt()) % numOfCards;
             LLCard deletedCardNode = removeAtIndex(rand);
-            addEnd(deletedCardNode); // change to addFront
+            addLast(deletedCardNode); // change to addFront
+            System.out.println("Done!!!!!!!");
+
         }
     }
 
