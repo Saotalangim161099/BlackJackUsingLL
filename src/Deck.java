@@ -136,7 +136,7 @@ public class Deck {
      * Add to the front
      */
     public void shuffle() { //ASSUMPTION: Each shuffle includes 4 times(the most)
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 1000; i++) {
             SecureRandom random = new SecureRandom();
             int rand = Math.abs(random.nextInt()) % numOfCards;
             LLCard deletedCardNode = removeAtIndex(rand);
