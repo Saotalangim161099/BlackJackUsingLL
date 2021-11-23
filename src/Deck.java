@@ -79,30 +79,31 @@ public class Deck {
     public LLCard removeAtIndex(int index) {
         System.out.println("Removing card at " + index);
         if (head == null) {
+            System.out.println("Deck is empty");
             return null;
         }
         LLCard cursor = head;
         if (index == 0) {
-            LLCard tempHead = head;
+            LLCard temp = head;
             head = head.getLink();
+            temp.setLink(null);
             numOfCards--;
-            return tempHead;
-
+            return temp;
         }
 
         for (int i = 0; cursor != null && i < index - 1; i++) {
             cursor = cursor.getLink();
         }
-        if (cursor==null||cursor.getLink()==null) {
+        if (cursor == null || cursor.getLink() == null) {
+            System.out.println("Out of bound");
             return null;
         }
         LLCard nextOfNext = cursor.getLink().getLink();
         LLCard removedNode = cursor.getLink();
+        removedNode.setLink(null);
         cursor.setLink(nextOfNext);
         numOfCards--;
         return removedNode;
-
-
     }
 
     //Fix, add both addEnd and addFront method
@@ -111,23 +112,20 @@ public class Deck {
             head = newCardNode;
             numOfCards++;
             return;
-        }
-        else if  (head.getLink()==null){
+        } else if (head.getLink() == null) {
             head.setLink(newCardNode);
             numOfCards++;
             return;
-        }
-        else{
+        } else {
             LLCard cursor = head;
 
             while (cursor.getLink() != null) {
-                cursor = cursor.getLink();
                 System.out.println(cursor.getCard());
                 System.out.println("*******");
-                numOfCards++;
-
+                cursor = cursor.getLink();
             }
             cursor.setLink(newCardNode);
+            numOfCards++;
         }
 
 
@@ -138,7 +136,7 @@ public class Deck {
      * Add to the front
      */
     public void shuffle() { //ASSUMPTION: Each shuffle includes 4 times(the most)
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 50; i++) {
             SecureRandom random = new SecureRandom();
             int rand = Math.abs(random.nextInt()) % numOfCards;
             LLCard deletedCardNode = removeAtIndex(rand);
