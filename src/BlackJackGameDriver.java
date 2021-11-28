@@ -22,6 +22,17 @@ public class BlackJackGameDriver {
         }
     }
 
+    public boolean wantsToHit(Player player) {
+        if (player.playerHand.getTotalPoint() < 17) {
+            return true;
+        }
+        return false;
+    }
+
+    public void hit(Player player){
+        bJDeck.hitCard(player);
+    }
+
     public int getRemainingCardCount(){
         return bJDeck.numOfCards;
     }

@@ -15,7 +15,18 @@ public class Driver {
         System.out.println("----------------------");
         System.out.println(driver.getRemainingCardCount());
         System.out.println("----------------------");
-        driver.bJDeck.printCards();
+        System.out.println("Hey "+player1.getName()+". Wanna hit? "+driver.wantsToHit(player1));
+        if (driver.wantsToHit(player1)){
+            driver.hit(player1);
+        }
+        System.out.println("Hey "+player2.getName()+". Wanna hit? "+driver.wantsToHit(player2));
+        if (driver.wantsToHit(player2)){
+            driver.hit(player2);
+        }
+        System.out.println("Hey "+player3.getName()+". Wanna hit? "+driver.wantsToHit(player3));
+        if (driver.wantsToHit(player3)){
+            driver.hit(player3);
+        }
         /*
         System.out.println("----------------------");
         System.out.println("Who wins?");

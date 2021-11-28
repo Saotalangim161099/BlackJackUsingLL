@@ -168,6 +168,13 @@ public class Deck {
         player.playerHand.addFront(removedCard2);
     }
 
+    public void hitCard(Player player){
+        shuffle();
+        LLCard removedCard1=removeFirst();
+        player.playerHand.addFront(removedCard1);
+        player.playerHand.printCards();
+    }
+
     public int size() {
         return numOfCards;
     }

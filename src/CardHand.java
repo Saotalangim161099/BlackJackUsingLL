@@ -35,31 +35,30 @@ public class CardHand extends Deck implements Comparable {
     }
 
     public boolean isBlackJack() {
-       if ((size()==2)&&getTotalPoint()==21){
-           return true;
-       }
-       return false;
+        if ((size() == 2) && getTotalPoint() == 21) {
+            return true;
+        }
+        return false;
     }
 
 
     public int getTotalPoint() {
         int totalPoint = 0;
-        int non_aces_sum=0;
-        int numOfAce=0;
+        int non_aces_sum = 0;
+        int numOfAce = 0;
         if (head == null) {
             totalPoint = 0;
         } else if (head.getLink() == null) {
             totalPoint = head.getCardValue();
-            if (head.getCardValue()==1){
-                totalPoint+=10;
+            if (head.getCardValue() == 1) {
+                totalPoint += 10;
             }
         } else {
             LLCard cursor = head;
             while (cursor != null) {
                 if (cursor.getCardValue() == 1) {
                     numOfAce++;
-                }
-                else{
+                } else {
                     non_aces_sum += cursor.getCardValue();
                 }
                 cursor = cursor.getLink();
@@ -91,4 +90,6 @@ public class CardHand extends Deck implements Comparable {
                 return -1;
         }
     }
+
+
 }
