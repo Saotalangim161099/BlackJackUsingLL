@@ -10,7 +10,14 @@ public class LLCard {
         this.link = link;
     }
 
-    public String getCard(){
+    public int getCardValue(){
+        if (value.equals("11")||value.equals("12")||value.equals("13")){
+            return Integer.parseInt("10");
+        }
+        return Integer.parseInt(this.value);
+    }
+
+    public String getCard() {
         switch (suit) {
             case "H":
                 switch (value) {
@@ -68,9 +75,9 @@ public class LLCard {
         return null;
     }
 
-    public void setCard(String value, String suit){
-        this.value=value;
-        this.suit=suit;
+    public void setCard(String value, String suit) {
+        this.value = value;
+        this.suit = suit;
     }
 
     public LLCard getLink() {

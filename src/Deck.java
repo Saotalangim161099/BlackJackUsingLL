@@ -120,8 +120,8 @@ public class Deck {
             LLCard cursor = head;
 
             while (cursor.getLink() != null) {
-                System.out.println(cursor.getCard());
-                System.out.println("*******");
+                //System.out.println(cursor.getCard());
+                //System.out.println("*******");
                 cursor = cursor.getLink();
             }
             cursor.setLink(newCardNode);
