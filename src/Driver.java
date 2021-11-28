@@ -1,21 +1,33 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 public class Driver {
     public static void main(String args[]) {
-        CardHand cardHand=new CardHand(true);
+        Player player1 = new Player("Bi", "5715310062");
+        Player player2 = new Player("AToan", "5715310062");
+        Player player3 = new Player("CAnh", "5715310062");
+        ArrayList<Player> players=new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
 
-        cardHand.addLast(new LLCard("10","D",null));
-        cardHand.addLast(new LLCard("1","D",null));
-        cardHand.addLast(new LLCard("1","D",null));
-        cardHand.addLast(new LLCard("1","D",null));
-
-        //cardHand.printCards();
-        //System.out.println("Total point is: "+cardHand.getPoint());
-        System.out.println(cardHand.getTotalPoint());
-        System.out.println("----------");
-        //System.out.println(cardHand.size());
-        //System.out.println("Is BlackJack?"+cardHand.isBlackJack());
-        //LLCard card=new LLCard("12","H",null);
-        //System.out.println(card.getCardValue());
-
-
+        BlackJackGameDriver driver=new BlackJackGameDriver(players);
+        driver.dealCards();
+        System.out.println("----------------------");
+        System.out.println(driver.getRemainingCardCount());
+        System.out.println("----------------------");
+        driver.bJDeck.printCards();
+        /*
+        System.out.println("----------------------");
+        System.out.println("Who wins?");
+        if (player1.playerHand.compareTo(player2.playerHand) > 0) {
+            System.out.println("The winner is: " + player1.getName());
+        }
+        else if (player1.playerHand.compareTo(player2.playerHand) < 0) {
+            System.out.println("The winner is: " + player2.getName());
+        }
+        else{
+            System.out.println("Both are good!");
+        }
+        System.out.println("The number of cards remains in the deck :"+deck.numOfCards);*/
     }
 }

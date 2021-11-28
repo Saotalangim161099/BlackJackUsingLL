@@ -75,11 +75,27 @@ public class Deck {
 
     }
 
-
-    public LLCard removeAtIndex(int index) {
-        System.out.println("Removing card at " + index);
+    public LLCard removeFirst() {
         if (head == null) {
             System.out.println("Deck is empty");
+            return null;
+        } else if (head.getLink() == null) {
+            numOfCards--;
+            return head;
+        } else {
+            LLCard firstNode=head;
+            head=head.getLink();
+            firstNode.setLink(null);
+            numOfCards--;
+            return firstNode;
+        }
+    }
+
+
+    public LLCard removeAtIndex(int index) {
+        //System.out.println("Removing card at " + index);
+        if (head == null) {
+            //System.out.println("Deck is empty");
             return null;
         }
         LLCard cursor = head;
@@ -95,7 +111,7 @@ public class Deck {
             cursor = cursor.getLink();
         }
         if (cursor == null || cursor.getLink() == null) {
-            System.out.println("Out of bound");
+
             return null;
         }
         LLCard nextOfNext = cursor.getLink().getLink();
@@ -127,8 +143,6 @@ public class Deck {
             cursor.setLink(newCardNode);
             numOfCards++;
         }
-
-
     }
 
     /**
@@ -141,9 +155,17 @@ public class Deck {
             int rand = Math.abs(random.nextInt()) % numOfCards;
             LLCard deletedCardNode = removeAtIndex(rand);
             addLast(deletedCardNode); // change to addFront
-            System.out.println("Done!!!!!!!");
+            //System.out.println("Done!!!!!!!");
 
         }
+    }
+
+    public void dealCards(Player player){
+        shuffle();
+        LLCard removedCard1=removeFirst();
+        player.playerHand.addFront(removedCard1);
+        LLCard removedCard2=removeFirst();
+        player.playerHand.addFront(removedCard2);
     }
 
     public int size() {
