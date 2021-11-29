@@ -1,4 +1,4 @@
-public class LLCard {
+public class LLCard {  //LLCard acts as a node
     String value;
     String suit;
     int numOfCards;
@@ -87,6 +87,8 @@ public class LLCard {
     public void setLink(LLCard link) {
         this.link = link;
     }
+
+
 
     public boolean isSmallerValue(LLCard card) { //Node value<card value
         return Integer.parseInt(this.value) < Integer.parseInt(card.value);
