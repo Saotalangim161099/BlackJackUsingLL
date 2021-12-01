@@ -9,11 +9,12 @@ public class BlackJackGameDriver {
     String name, phoneNumber;
     Deck bJDeck;
     Scanner sc = new Scanner(System.in);
+    Dealer dealer=new Dealer();
 
-    public BlackJackGameDriver(ArrayList<Player> players) {
-        this.players = players;
+    public BlackJackGameDriver() {
         bJDeck = new Deck(false);
         turnIndex = 0;
+        players=new ArrayList<>();
 
         //Introduction context
         String names;
@@ -43,7 +44,8 @@ public class BlackJackGameDriver {
             name = sc.next();
             System.out.println("What is player " + (i + 1) + "'s phone number? ");
             phoneNumber = sc.next();
-            players.add(new Player(name, phoneNumber));
+            Player player=new Player(name, phoneNumber);
+            players.add(player);
         }
     }
 
@@ -76,6 +78,7 @@ public class BlackJackGameDriver {
                     players.get(j).playerHand.addFront(bJDeck.removeFirst());
                 }
             }
+            dealer.addFront(bJDeck.removeFirst());
         }
     }
 
@@ -107,5 +110,87 @@ public class BlackJackGameDriver {
     public String toString() {
         return players.toString();
     }
+
+    public void hitOrStand(){
+        String command;
+        char choice;
+        for (int i=0;i<numOfPlayers;i++){
+            if ((players.get(i).getBet()>0)&&(wantsToHit(players.get(i))==true)){
+                do{
+                    do{
+                        System.out.println("Hit or stand?");
+                        command=sc.next();
+                        choice=command.toUpperCase().charAt(0);
+                    } while ((choice!='H'&&choice!='S'));
+                    if (choice=='H'){
+                        bJDeck.hitCard(players.get(i));
+                        System.out.println("Now "+players.get(i)+" has: ");
+                        players.get(i).playerHand.printCards();
+                    }
+                } while (choice!='S'&&players.get(i).playerHand.getTotalPoint()<=21);
+            }
+        }
+    }
+
+    //dealer plays
+    public void dealerPlays(){
+        boolean areAllPlayersDone=true;
+        for (int i=0;i<numOfPlayers&&areAllPlayersDone==true;i++){
+            if (players.get(i).getBet()>0&&players.get(i).playerHand.getTotalPoint()<=21){
+                areAllPlayersDone=false;
+            }
+        }
+        if (areAllPlayersDone==true){
+            dealer.dealerControl(bJDeck);
+        }
+    }
+
+    //Consider all possible outcomes and adds or removes the players'bets
+    public void controlGame(){
+        for (int i=0;i<numOfPlayers;i++){
+            if (players.get(i).getBet()>0){
+                if (players.get(i).getTotalPointPlayerHand()>21){
+                    System.out.println(players.get(i).getName()+" has busted!");
+                    players.get(i).loseBet();
+                    //players.get(i).bust()
+                }
+                //else if (players.get(i).getTotalPointPlayerHand()== dealer.getTotalPointDealerHand()){
+                else if (players.get(i).getTotalPointPlayerHand()<dealer.getTotalPointDealerHand()&&dealer.getTotalPointDealerHand()<=21){
+                    System.out.println(players.get(i).getName()+"have lost!");
+                    players.get(i).loseBet();
+                }
+                else{
+                    System.out.println(players.get(i).getName()+"have won!");
+                    players.get(i).winBet();
+                }
+            }
+        }
+    }
+
+    //print status
+    public void printStatus(){
+        for (int i=0;i<numOfPlayers;i++){
+            if (players.get(i).getBank()>0){
+                System.out.println(players.get(i).getName()+" has ");
+                players.get(i).playerHand.printCards();
+            }
+        }
+        System.out.println("Dealer has ");
+        dealer.dealerHand.printCards();
+    }
+
+    //print bank
+    public void printMoney(){
+        for (int i=0;i<numOfPlayers;i++){
+            if (players.get(i).getBank()>0){
+                System.out.println(players.get(i).getName()+" has "+players.get(i).getBank());
+            }
+            else if (players.get(i).getBank()==0){
+                System.out.println(players.get(i).getName()+" has "+players.get(i).getBank() + ", and is kicked out of the game!!");
+            }
+        }
+    }
+
+
 
 }

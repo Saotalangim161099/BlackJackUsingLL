@@ -35,7 +35,7 @@ public class Dealer{
         dealerHand.addFront(card);
     }
 
-    public int getTotalPoint(){
+    public int getTotalPointDealerHand(){
         return dealerHand.getTotalPoint();
     }
 }

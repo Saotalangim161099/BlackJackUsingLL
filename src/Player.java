@@ -47,6 +47,11 @@ public class Player {
         this.bet = bet;
     }
 
+    //get total points of player hand
+    public int getTotalPointPlayerHand(){
+        return playerHand.getTotalPoint();
+    }
+
     public CardHand getPlayerHand() {
         return playerHand;
     }
@@ -77,16 +82,12 @@ public class Player {
         bank=0;
     }
 
-    //Gets the player's hand card
-    public String getHandCard(){
-        return ("Cards: "+getHandCard());
-    }
 
     //Clears the player's hand card
-
 
     //adding more right there
     public String toString(){
         return name+", "+phoneNumber;
     }
+
 }
