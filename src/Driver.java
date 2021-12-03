@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Driver {
     public static void main(String args[]) {
-        Scanner scanner = new Scanner(System.in);
+       Scanner scanner = new Scanner(System.in);
         BlackJackGameDriver gameDriver = new BlackJackGameDriver();
         ArrayList<Player> players = new ArrayList<>();
         Player Toan = new Player("Toan","12345");
@@ -12,6 +12,14 @@ public class Driver {
         players.add(Toan);
         players.add(Bi);
         gameDriver.initGame(players,1);
+        for (Player player:players){
+            System.out.println(player.getName());
+            gameDriver.dealCard(player);
+            gameDriver.dealCard(player);
+            player.printPlayerHand();
+            System.out.println("Current total point: "+player.getTotalPointPlayerHand());
+
+        }
 
         while(!gameDriver.isGameFinished())
         {
@@ -25,6 +33,7 @@ public class Driver {
         }
 //        gameDriver.dealCards();
 //        gameDriver.printStatus();
+
 
 
     }

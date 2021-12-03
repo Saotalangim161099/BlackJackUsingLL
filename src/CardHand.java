@@ -1,16 +1,18 @@
-public class CardHand extends Deck implements Comparable {
+import java.util.ArrayList;
+
+public class CardHand implements Comparable {
     private static final int BLACKJACK_VALUE = 999999;
     private static final int BUSTED_VALUE = -1;
-    LLCard cardHand;
+    ArrayList<LLCard> cardHand;
 
 
     /**
      * if empty is true, generate a deck with no card, otherwise, generate a full standard deck
      *
-     * @param empty
+     * @param
      */
-    public CardHand(boolean empty) {
-        super(true);
+    public CardHand() {
+        cardHand = new ArrayList<>();
     }
 
     /**
@@ -20,7 +22,7 @@ public class CardHand extends Deck implements Comparable {
         if (isBlackJack()) {
             return BLACKJACK_VALUE;
         }
-        if (isBusted()) {
+        else if (isBusted()) {
             return BUSTED_VALUE;
         } else {
             return getTotalPoint();
@@ -35,14 +37,14 @@ public class CardHand extends Deck implements Comparable {
     }
 
     public boolean isBlackJack() {
-        if ((size() == 2) && getTotalPoint() == 21) {
+        if ((cardHand.size() == 2) && getTotalPoint() == 21) {
             return true;
         }
         return false;
     }
 
 
-    public int getTotalPoint() {
+    /*public int getTotalPoint() {
         int totalPoint = 0;
         int non_aces_sum = 0;
         int numOfAce = 0;
@@ -76,7 +78,45 @@ public class CardHand extends Deck implements Comparable {
             totalPoint = non_aces_sum + aces_sum;
         }
         return totalPoint;
+    }*/
+
+    public int getTotalPoint() {
+        int totalPoint = 0;
+        int non_aces_sum = 0;
+        int numOfAce = 0;
+        for (LLCard card : cardHand) {
+            if (card.getCardValue() == 1) {
+                numOfAce++;
+            } else {
+                non_aces_sum += card.getCardValue();
+            }
+            card = card.getLink();
+        }
+        int aces_sum = 0;
+        if (numOfAce > 0) {
+            aces_sum = 11;
+        }
+        for (int i = 0; i < numOfAce - 1; i++) {  //already assign 1 ace value of 1
+            aces_sum += 1;
+        }
+        if (aces_sum + non_aces_sum > 21) {
+            aces_sum = numOfAce;
+        }
+        totalPoint = non_aces_sum + aces_sum;
+
+        return totalPoint;
     }
+
+    public void presentCardHand(){
+        for (int i=0;i<cardHand.size();i++){
+            System.out.println(cardHand.get(i).getCard());
+        }
+    }
+
+    public void addCard(LLCard card){
+        cardHand.add(card);
+    }
+
 
     @Override
     public int compareTo(Object o) {
@@ -90,8 +130,6 @@ public class CardHand extends Deck implements Comparable {
                 return -1;
         }
     }
-
-
 
 
 }

@@ -13,27 +13,27 @@ public class BlackJackGameDriver {
     public void initGame(ArrayList<Player> players, int deckCount) {
         turnIndex = 0;
         showIntro();
+        this.players = players;
         initPlayers(players);
         initDeck(); //deckCount will be used later to create blackjack deck with multiple decks
+        BJDeck.shuffle();
+
         gameFinished = false;
     }
 
     public void initPlayers(ArrayList<Player> players) {
         this.players = players;
-        System.out.println("List of player:");
-        for (Player player : players) {
-            System.out.println(player);
-        }
+
     }
 
     public void initDeck() {
         BJDeck = new Deck(false);
     }
 
-    public boolean isGameFinished()
-    {
+    public boolean isGameFinished() {
         return gameFinished;
     }
+
 
     public void showIntro() {
         System.out.println("******************** WELCOME TO BLACKJACK!********************");
@@ -48,24 +48,56 @@ public class BlackJackGameDriver {
         System.out.println("	-If the player total equals the dealer total, it is a “Push” and the hand ends.");
         System.out.println("	-Players win their bet if they beat the dealer. Players win 1.5x their bet if they get “Blackjack” which is 21.");
         System.out.println("***************************************************************");
+
     }
 
+
     public void processMove(Move move) {
-        if (move.getPlayer().getName().equals(players.get(turnIndex).getName())) {
+        move.getPlayer().printPlayerHand();
+        System.out.println("***********");
+        if (move.getPlayer().getName().equalsIgnoreCase(players.get(turnIndex).getName())) {
             System.out.println("Player " + move.getPlayer().getName() + " want to " + move.getMove());
-            if(move.getMove().toLowerCase().equals("stand"))
-            {
+            if (move.getMove().toLowerCase().equals("stand")) {
                 turnIndex++;
+            } else if (move.getMove().toLowerCase().equals("hit")) {
+                dealCard(players.get(turnIndex));
+                System.out.println(players.get(turnIndex).getName() + "'s card hand: ");
+                players.get(turnIndex).printPlayerHand();
+                System.out.println("Point: " + players.get(turnIndex).playerHand.getTotalPoint());
             }
 
-            if(turnIndex>players.size())
-            {
+            if (turnIndex == players.size()) {
                 //calculate point, decide winner, flip isGameFinish to True
+                System.out.println("BlackJack Game is over! Now it's time to know the winner!!!");
+                determineWinner();
+
             }
             //process player's move
         } else {
             System.out.println("It's not " + move.getPlayer().getName() + "'s turn");
         }
+    }
+
+    //calculate total points of 2 players and then determine the winner
+    public void determineWinner() {
+
+        int result = players.get(0).playerHand.compareTo(players.get(1).playerHand);
+        System.out.println(players.get(0).getName()+"'s total point: "+players.get(0).getTotalPointPlayerHand());
+        if (players.get(0).playerHand.isBusted()){
+            System.out.println("You are busted!!!!!");
+        }
+        System.out.println(players.get(1).getName()+"'s total point: "+players.get(1).getTotalPointPlayerHand());
+        if (players.get(1).playerHand.isBusted()){
+            System.out.println("You are busted!!!!!");
+        }
+        if (result == 0) {
+            System.out.println("Both are busted!");
+        } else if (result == 1) {
+            System.out.println("Congratulations! The winner is " + players.get(0).getName());
+        } else {
+            System.out.println("Congratulations! The winner is " + players.get(1).getName());
+        }
+        gameFinished = true;
     }
 
     //Shuffle the deck
@@ -88,13 +120,17 @@ public class BlackJackGameDriver {
         }
     }
 
+    public void dealCard(Player player) {
+        player.playerHand.addCard(BJDeck.removeFirst());
+    }
+
     //Deals 2 cards for each player and the dealer
     public void dealCards() {
         BJDeck.shuffle();
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < numOfPlayers; j++) {
                 if (players.get(j).getBank() > 0) {
-                    players.get(j).playerHand.addFront(BJDeck.removeFirst());
+                    players.get(j).playerHand.addCard(BJDeck.removeFirst());
                 }
             }
             dealer.addFront(BJDeck.removeFirst());
@@ -108,9 +144,6 @@ public class BlackJackGameDriver {
         return false;
     }
 
-    public void hit(Player player) {
-        BJDeck.hitCard(player);
-    }
 
     public int getRemainingCardCount() {
         return BJDeck.numOfCards;
@@ -130,7 +163,7 @@ public class BlackJackGameDriver {
         return players.toString();
     }
 
-    public void hitOrStand() {
+    /*public void hitOrStand() {
         String command;
         char choice;
         for (int i = 0; i < numOfPlayers; i++) {
@@ -149,7 +182,7 @@ public class BlackJackGameDriver {
                 } while (choice != 'S' && players.get(i).playerHand.getTotalPoint() <= 21);
             }
         }
-    }
+    }*/
 
     //dealer plays
     public void dealerPlays() {
@@ -165,10 +198,10 @@ public class BlackJackGameDriver {
     }
 
     //Consider all possible outcomes and adds or removes the players'bets
-    public void controlGame() {
+   /* public void controlGame() {
         for (int i = 0; i < numOfPlayers; i++) {
             if (players.get(i).getBet() > 0) {
-                if (players.get(i).getTotalPointPlayerHand() > 21) {
+                if (players.get(i).playerHand.getTotalPointPlayerHand() > 21) {
                     System.out.println(players.get(i).getName() + " has busted!");
                     players.get(i).loseBet();
                     //players.get(i).bust()
@@ -183,18 +216,18 @@ public class BlackJackGameDriver {
                 }
             }
         }
-    }
+    }*/
 
     //print status
     public void printStatus() {
         for (int i = 0; i < numOfPlayers; i++) {
             if (players.get(i).getBank() > 0) {
                 System.out.println(players.get(i).getName() + " has ");
-                players.get(i).playerHand.printCards();
+                players.get(i).playerHand.presentCardHand();
             }
         }
         System.out.println("Dealer has ");
-        dealer.dealerHand.printCards();
+        dealer.dealerHand.presentCardHand();
     }
 
     //print bank

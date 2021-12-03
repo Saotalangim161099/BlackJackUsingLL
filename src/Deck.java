@@ -160,10 +160,10 @@ public class Deck {
         }
     }
 
-    public void dealCards(Player player){
+    /*public void dealCards(Player player){
         shuffle();
         LLCard removedCard1=removeFirst();
-        player.playerHand.addFront(removedCard1);
+        player.playerHand.add(removedCard1);
         LLCard removedCard2=removeFirst();
         player.playerHand.addFront(removedCard2);
     }
@@ -173,7 +173,7 @@ public class Deck {
         LLCard removedCard1=removeFirst();
         player.playerHand.addFront(removedCard1);
         player.playerHand.printCards();
-    }
+    }*/
 
     public int size() {
         return numOfCards;

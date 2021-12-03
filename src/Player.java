@@ -12,7 +12,11 @@ public class Player {
         this.bank = 100; //Initially each player will be offered 100 coins
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.playerHand = new CardHand(true);
+        this.playerHand = new CardHand();
+    }
+
+    public void addCard(LLCard card){
+        playerHand.addCard(card);
     }
 
     public String getName() {
@@ -88,6 +92,10 @@ public class Player {
     //adding more right there
     public String toString() {
         return name + " - " + phoneNumber;
+    }
+
+    public void printPlayerHand(){
+        playerHand.presentCardHand();
     }
 
 }
