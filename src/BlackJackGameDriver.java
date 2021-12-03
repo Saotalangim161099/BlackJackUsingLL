@@ -17,8 +17,8 @@ public class BlackJackGameDriver {
         initPlayers(players);
         initDeck(); //deckCount will be used later to create blackjack deck with multiple decks
         BJDeck.shuffle();
-
         gameFinished = false;
+        dealStartingCards();
     }
 
     public void initPlayers(ArrayList<Player> players) {
@@ -51,12 +51,21 @@ public class BlackJackGameDriver {
 
     }
 
+    public void dealStartingCards() {
+        for (Player player : players) {
+            System.out.println(player.getName());
+            dealCard(player);
+            dealCard(player);
+            player.printPlayerHand();
+            System.out.println("Current total point: " + player.getTotalPointPlayerHand());
+
+        }
+    }
+
 
     public void processMove(Move move) {
-        move.getPlayer().printPlayerHand();
-        System.out.println("***********");
-        if (move.getPlayer().getName().equalsIgnoreCase(players.get(turnIndex).getName())) {
-            System.out.println("Player " + move.getPlayer().getName() + " want to " + move.getMove());
+        if (move.getPhoneNumber().equals(players.get(turnIndex).getPhoneNumber())) {
+            System.out.println("Player having phone number: "+move.getPhoneNumber()+ " want to " + move.getMove());
             if (move.getMove().toLowerCase().equals("stand")) {
                 turnIndex++;
             } else if (move.getMove().toLowerCase().equals("hit")) {
@@ -74,7 +83,7 @@ public class BlackJackGameDriver {
             }
             //process player's move
         } else {
-            System.out.println("It's not " + move.getPlayer().getName() + "'s turn");
+            System.out.println("It's not Player having phone number: "+move.getPhoneNumber() + "'s turn");
         }
     }
 
@@ -82,12 +91,12 @@ public class BlackJackGameDriver {
     public void determineWinner() {
 
         int result = players.get(0).playerHand.compareTo(players.get(1).playerHand);
-        System.out.println(players.get(0).getName()+"'s total point: "+players.get(0).getTotalPointPlayerHand());
-        if (players.get(0).playerHand.isBusted()){
+        System.out.println(players.get(0).getName() + "'s total point: " + players.get(0).getTotalPointPlayerHand());
+        if (players.get(0).playerHand.isBusted()) {
             System.out.println("You are busted!!!!!");
         }
-        System.out.println(players.get(1).getName()+"'s total point: "+players.get(1).getTotalPointPlayerHand());
-        if (players.get(1).playerHand.isBusted()){
+        System.out.println(players.get(1).getName() + "'s total point: " + players.get(1).getTotalPointPlayerHand());
+        if (players.get(1).playerHand.isBusted()) {
             System.out.println("You are busted!!!!!");
         }
         if (result == 0) {

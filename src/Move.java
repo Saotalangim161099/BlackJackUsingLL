@@ -1,18 +1,18 @@
 public class Move {
-    Player player;
+    String phoneNumber;
     String move;
 
-    public Move(Player player, String move) {
-        this.player = player;
+    public Move(String phoneNumber, String move) {
+        this.phoneNumber = phoneNumber;
         this.move = move;
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getMove() {
