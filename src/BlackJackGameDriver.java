@@ -19,7 +19,56 @@ public class BlackJackGameDriver {
         BJDeck.shuffle();
         gameFinished = false;
         dealStartingCards();
+        checkBlackJack();
+
     }
+
+    //If any player has BlackJack, he/she will be the winner, then terminates the game
+    public boolean checkBlackJack(){
+        for (Player player:players){
+            if (player.playerHand.isBlackJack()){
+                gameFinished=true;
+                System.out.println("Player "+player.getName()+" has BlackJack!!!!");
+                System.out.println("The winner is "+player.getName());
+            }
+        }
+        return false;
+    }
+
+    //compare multiple players points, will return LIST of winners
+    public ArrayList<Player> compareMultiple(){
+        ArrayList<Integer> points=new ArrayList<>();
+        ArrayList<Player> winners=new ArrayList<>();
+        Player maxValuePlayer=players.get(0);
+
+        int maxValue=players.get(0).playerHand.getValue();
+        for (Player player:players){
+            if (player.playerHand.getValue()>maxValue){
+                maxValue=player.playerHand.getValue();
+                maxValuePlayer=player;
+                winners.clear();
+                winners.add(player);
+            }
+            else if (player.playerHand.getValue()==maxValue){
+                winners.add(player);
+            }
+        }
+        return winners;
+
+    }
+
+    //determine max points among list of players' points
+    public int maxPoint(ArrayList<Integer> list){
+        int max=list.get(0);
+        for (int i=1;i< list.size();i++){
+            if (list.get(i)>max){
+                max=list.get(i);
+            }
+        }
+        return max;
+    }
+
+
 
     public void initPlayers(ArrayList<Player> players) {
         this.players = players;
@@ -66,6 +115,7 @@ public class BlackJackGameDriver {
     public void processMove(Move move) {
         if (move.getPhoneNumber().equals(players.get(turnIndex).getPhoneNumber())) {
             System.out.println("Player having phone number: "+move.getPhoneNumber()+ " want to " + move.getMove());
+            System.out.println("Total point: "+players.get(turnIndex).getTotalPointPlayerHand());
             if (move.getMove().toLowerCase().equals("stand")) {
                 turnIndex++;
             } else if (move.getMove().toLowerCase().equals("hit")) {
@@ -78,7 +128,8 @@ public class BlackJackGameDriver {
             if (turnIndex == players.size()) {
                 //calculate point, decide winner, flip isGameFinish to True
                 System.out.println("BlackJack Game is over! Now it's time to know the winner!!!");
-                determineWinner();
+                gameFinished=true;
+                determineWinnerMultiple();
 
             }
             //process player's move
@@ -88,7 +139,7 @@ public class BlackJackGameDriver {
     }
 
     //calculate total points of 2 players and then determine the winner
-    public void determineWinner() {
+    public void determineWinnerOverTwo() {
 
         int result = players.get(0).playerHand.compareTo(players.get(1).playerHand);
         System.out.println(players.get(0).getName() + "'s total point: " + players.get(0).getTotalPointPlayerHand());
@@ -107,6 +158,18 @@ public class BlackJackGameDriver {
             System.out.println("Congratulations! The winner is " + players.get(1).getName());
         }
         gameFinished = true;
+    }
+
+    //determine winner over multiple players
+    public void determineWinnerMultiple(){
+        for (Player player:players){
+            System.out.println(player.getName() + "'s total point: " + player.getTotalPointPlayerHand());
+        }
+        ArrayList<Player> winners=compareMultiple();
+        System.out.println("Winner(s): ");
+        for (Player winner:winners){
+            System.out.println(winner.getName());
+        }
     }
 
     //Shuffle the deck

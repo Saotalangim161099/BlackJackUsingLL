@@ -9,8 +9,10 @@ public class Driver {
         ArrayList<Player> players = new ArrayList<>();
         Player Toan = new Player("Toan", "12345");
         Player Bi = new Player("Bi", "6789");
+        Player Bo = new Player("Bo", "1011");
         players.add(Toan);
         players.add(Bi);
+        players.add(Bo);
         gameDriver.initGame(players, 1);
 
         while (!gameDriver.isGameFinished()) {
