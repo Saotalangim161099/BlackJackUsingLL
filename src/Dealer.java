@@ -16,12 +16,15 @@ public class Dealer {
     }*/
 
 
-
     public void addFront(LLCard card) {
         dealerHand.addCard(card);
     }
 
     public int getTotalPointDealerHand() {
         return dealerHand.getTotalPoint();
+    }
+
+    public void printHand() {
+        dealerHand.presentCardHand();
     }
 }

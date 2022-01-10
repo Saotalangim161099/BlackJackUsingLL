@@ -1,21 +1,24 @@
 public class Player {
-    //name
-    //phone number
-    //CardHand
-    String name;
-    String phoneNumber;
-    int bank;
-    int bet;
-    CardHand playerHand;
+
+    private String name;
+    private String phoneNumber;
+    private CardHand playerHand;
+
+    private int status;
+
+    public static final int STATUS_WIN = 1;
+    public static final int STATUS_TIE = 0;
+    public static final int STATUS_LOSE = -1;
+    public static final int STATUS_UNDETERMINED = 9;
 
     public Player(String name, String phoneNumber) {
-        this.bank = 100; //Initially each player will be offered 100 coins
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.playerHand = new CardHand();
+        status = STATUS_UNDETERMINED;
     }
 
-    public void addCard(LLCard card){
+    public void addCard(LLCard card) {
         playerHand.addCard(card);
     }
 
@@ -35,25 +38,17 @@ public class Player {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getBank() {
-        return bank;
+    public int getStatus() {
+        return status;
     }
 
-    public void setBank(int bank) {
-        this.bank = bank;
-    }
-
-    public int getBet() {
-        return bet;
-    }
-
-    public void setBet(int bet) {
-        this.bet = bet;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     //get total points of player hand
-    public int getTotalPointPlayerHand() {
-        return playerHand.getTotalPoint();
+    public int getHandValue() {
+        return playerHand.getValue();
     }
 
     public CardHand getPlayerHand() {
@@ -64,37 +59,11 @@ public class Player {
         this.playerHand = playerHand;
     }
 
-    //Doing there
-    public int getPoint() {
-        return -1;
-    }
-
-    //Removes the player's bet amount from their bank if they bust. Then sets his bet to 0
-    public void loseBet() {
-        bank -= bet;
-        bet = 0;
-    }
-
-    //Otherwise adds the player's bank the amount they bet. Also set bet to 0
-    public void winBet() {
-        bank += bet;
-        bet = 0;
-    }
-
-    //reset the removed player's bank to 0
-    public void resetBank() {
-        bank = 0;
-    }
-
-
-    //Clears the player's hand card
-
-    //adding more right there
     public String toString() {
         return name + " - " + phoneNumber;
     }
 
-    public void printPlayerHand(){
+    public void printHand() {
         playerHand.presentCardHand();
     }
 

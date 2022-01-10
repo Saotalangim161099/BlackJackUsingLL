@@ -28,7 +28,7 @@ public class Driver {
             String phoneNumber = scanner.nextLine();
             System.out.println("What is your move? (hit/stand)");
             String move = scanner.nextLine();
-            gameDriver.processMove(new Move(phoneNumber, move));
+            gameDriver.processMove(phoneNumber, move);
         }
 
 //        gameDriver.dealCards();
